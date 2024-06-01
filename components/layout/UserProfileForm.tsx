@@ -13,7 +13,7 @@ import { DefaultOptionType } from "antd/es/select";
 import { Radio } from "antd";
 import { Skill } from "@/queries/skills/getSkills";
 
-export default function UserProfileForm({ skills }: { skills: Skill[] }) {
+export default function UserProfileForm({ skills }: { skills?: Skill[] }) {
   const router = useRouter();
   const [options, setOptions] = useState<DefaultOptionType[]>();
 
@@ -44,13 +44,9 @@ export default function UserProfileForm({ skills }: { skills: Skill[] }) {
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-3">
-      <Input name="name" placeholder="Name" label="Name" />
-      <Input name="lastName" placeholder="Last Name" label="Last Name" />
-      <Input
-        name="phoneNumber"
-        placeholder="Phone Number"
-        label="Phone Number"
-      />
+      <Input name="name" placeholder="Name" />
+      <Input name="lastName" placeholder="Last Name" />
+      <Input name="phoneNumber" placeholder="Phone Number" />
       <Radio.Group className="flex gap-2">
         <Radio name="timeAvailability" value={"FULL_TIME"}>
           Full time

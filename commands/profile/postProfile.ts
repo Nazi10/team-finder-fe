@@ -1,6 +1,6 @@
 "use server";
 
-import { mutate, publicAction } from "@/core/commandClient";
+import { mutate, privateAction, publicAction } from "@/core/commandClient";
 import { z } from "zod";
 import { zfd } from "zod-form-data";
 
@@ -34,7 +34,7 @@ const schema = zfd.formData({
   timeAvailability: zfd.text(z.string()),
 });
 
-export const postProfile = publicAction(schema, async (req) => {
+export const postProfile = privateAction(schema, async (req) => {
   const body = {
     name: req.name,
     lastName: req.lastName,

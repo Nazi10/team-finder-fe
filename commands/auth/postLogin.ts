@@ -1,6 +1,8 @@
 "use server";
 
-import { mutate, publicAction } from "@/core/commandClient";
+import { publicAction } from "@/core/commandClient";
+import { AuthError } from "next-auth";
+import { signIn } from "@/core/auth";
 import { z } from "zod";
 import { zfd } from "zod-form-data";
 
@@ -11,16 +13,15 @@ const schema = zfd.formData({
   ),
 });
 
-export const postLogin = publicAction(schema, async (req) => {
-  const body = {
-    username: req.username,
-    password: req.password,
-  };
-  const res = await mutate<Partial<z.infer<typeof schema>>, { token: string }>({
-    url: `api/auth/signin`,
-    body: body,
-    method: "POST",
-  });
-
-  return res;
+export const postLogin = publicAction(schema, async (data) => {
+  await signIn("credentials", { ...data, redirect: false }).catch(
+    (e: AuthError) => {
+      throw new Error(
+        e.message?.replace(
+          `Read more at https://errors.authjs.dev#${e.type.toLowerCase()}`,
+          ""
+        )
+      );
+    }
+  );
 });

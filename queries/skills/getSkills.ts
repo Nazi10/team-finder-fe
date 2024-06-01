@@ -9,6 +9,6 @@ export default async function getSkills(): Promise<Skill[]> {
   return await query<Skill[]>({
     url: `api/skills/all`,
     tags: ["skill"],
-    isProtected: false,
+    isProtected: true,
   });
 }

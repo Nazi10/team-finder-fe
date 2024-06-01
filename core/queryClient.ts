@@ -22,16 +22,20 @@ export async function query<TResult = unknown>({
     headers,
     next: { tags: [tags.reduce((acc, curr) => `${acc}-${curr}`)] },
   });
+  console.log(headers);
+
   if (!res) throw new Error("No response");
   if (!res.ok) {
-    const errors = (await res.json()) as ErrorType[];
-    for (const error of errors) {
-      if (error.code === 401 && error.message === "Unauthorized") {
-        await signOut({ redirect: false });
-      }
-      console.error(error.message, { cause: error.code });
-    }
-    return errors as TResult;
+    console.log("negaaaa");
+
+    //   const errors = (await res.json()) as ErrorType[];
+    //   for (const error of errors) {
+    //     if (error.code === 401 && error.message === "Unauthorized") {
+    //       await signOut({ redirect: false });
+    //     }
+    //     console.error(error.message, { cause: error.code });
+    //   }
+    //   return errors as TResult;
   }
   return (await res.json()) as TResult;
 }

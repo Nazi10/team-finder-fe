@@ -1,9 +1,20 @@
 import MenuHeader from "@/components/layout/Header";
 import UserProfileForm from "@/components/layout/UserProfileForm";
-import getSkills from "@/queries/skills/getSkills";
+import { auth } from "@/core/auth";
+import getSkills, { Skill } from "@/queries/skills/getSkills";
 
 export default async function UserProfile() {
-  const skills = await getSkills();
+  const session = await auth();
+  let skills: Skill[] = [];
+  console.log(session?.user?.token);
+
+  if (session?.user?.token) {
+    skills = await getSkills();
+  }
+
+  console.log("====================================");
+  console.log(skills);
+  console.log("====================================");
   return (
     <>
       <MenuHeader />
@@ -12,7 +23,7 @@ export default async function UserProfile() {
           <h1 className="self-center text-3xl font-bold">
             Finish your profile setup
           </h1>
-          <UserProfileForm skills={skills} />
+          <UserProfileForm />
         </div>
       </div>
     </>

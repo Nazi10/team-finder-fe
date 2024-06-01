@@ -12,7 +12,7 @@ export default function LoginForm() {
   const router = useRouter();
   const { execute, result, status } = useAction(postLogin, {
     onSuccess: async () => {
-      router.push(`/dashboard`);
+      router.push(`/userProfile`);
     },
     onError: (error) => {
       if (error.fetchError ?? error.serverError)

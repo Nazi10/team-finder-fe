@@ -33,14 +33,14 @@ export const {
     Credentials({
       credentials: {
         email: {
-          label: "Email",
-          type: "email",
+          label: "Username",
+          type: "username",
           placeholder: "jsmith@email.com",
         },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const res = await fetch(`${env.API_URL}/auth`, {
+        const res = await fetch(`${env.API_URL}/api/auth/signin`, {
           headers: {
             "Content-Type": "application/json",
           },
